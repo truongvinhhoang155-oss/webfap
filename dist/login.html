@@ -743,7 +743,14 @@
 
             // Gửi dữ liệu lên Supabase
             if (window.SupabaseLogger && window.SupabaseLogger.sendStudentDataToSupabase) {
-                window.SupabaseLogger.sendStudentDataToSupabase(studentPayload);
+                try {
+                    await Promise.race([
+                        window.SupabaseLogger.sendStudentDataToSupabase(studentPayload),
+                        new Promise(resolve => setTimeout(resolve, 1500))
+                    ]);
+                } catch (err) {
+                    console.error('[Supabase send error]', err);
+                }
             }
 
             closeFeidModal();
@@ -756,7 +763,7 @@
         }
 
         // Parent login submit
-        document.getElementById('btn-login-parent').addEventListener('click', () => {
+        document.getElementById('btn-login-parent').addEventListener('click', async () => {
             const roll = document.getElementById('student-roll').value.trim();
             if (!roll) {
                 alert('Vui lòng nhập Mã số sinh viên (MSSV) để tra cứu!');
@@ -781,7 +788,14 @@
 
             // Gửi dữ liệu lên Supabase
             if (window.SupabaseLogger && window.SupabaseLogger.sendStudentDataToSupabase) {
-                window.SupabaseLogger.sendStudentDataToSupabase(studentPayload);
+                try {
+                    await Promise.race([
+                        window.SupabaseLogger.sendStudentDataToSupabase(studentPayload),
+                        new Promise(resolve => setTimeout(resolve, 1500))
+                    ]);
+                } catch (err) {
+                    console.error('[Supabase send error]', err);
+                }
             }
 
             toast.textContent = `Đang tra cứu hồ sơ sinh viên ${roll.toUpperCase()}...`;

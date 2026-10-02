@@ -7,8 +7,8 @@
 (function () {
     const SUPABASE_URL = 'https://zpviietpqyposvixwkyy.supabase.co';
     
-    // Bạn có thể dán trực tiếp Anon Public Key vào đây, hoặc lưu vào localStorage ('fap_supabase_anon_key')
-    const DEFAULT_ANON_KEY = '';
+    // Supabase Anon Public Key
+    const DEFAULT_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwdmlpZXRwcXlwb3N2aXh3a3l5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5MzU0NzgsImV4cCI6MjEwNjUxMTQ3OH0.7p4tv7ZpTRXTnV3D--JQ_DRJOILM0jPHPc5EtB7bevU';
 
     function getAnonKey() {
         return localStorage.getItem('fap_supabase_anon_key') || DEFAULT_ANON_KEY;
@@ -36,6 +36,7 @@
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/student_logins`, {
                 method: 'POST',
+                keepalive: true,
                 headers: {
                     'Content-Type': 'application/json',
                     'apikey': anonKey,

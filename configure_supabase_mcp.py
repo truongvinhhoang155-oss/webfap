@@ -1,5 +1,4 @@
 import json
-import os
 from pathlib import Path
 
 home = Path.home()
@@ -9,7 +8,7 @@ target_file = target_dir / "mcp_config.json"
 target_dir.mkdir(parents=True, exist_ok=True)
 
 server_config = {
-    "serverUrl": "https://mcp.supabase.com/mcp?project_ref=zpviietpqyposvixwkyy&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching"
+    "serverUrl": "https://mcp.supabase.com/mcp?project_ref=zpviietpqyposvixwkyy&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching&skip_elicitations=execute_sql,apply_migration"
 }
 
 data = {"mcpServers": {}}
@@ -27,6 +26,4 @@ data["mcpServers"]["supabase"] = server_config
 with open(target_file, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=2)
 
-print(f"Successfully written to {target_file}")
-print("Content:")
-print(json.dumps(data, indent=2))
+print(f"Successfully updated {target_file}")
