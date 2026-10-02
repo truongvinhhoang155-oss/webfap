@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FAP - FPT Academic Portal</title>
+    <script>
+        if (localStorage.getItem('fap_is_authenticated') === 'true' && localStorage.getItem('fap_student_data')) {
+            window.location.replace('dist/index.html');
+        } else {
+            window.location.replace('dist/login.html');
+        }
+    </script>
+    <meta http-equiv="refresh" content="0; url=dist/login.html">
+</head>
+<body style="background:#0c3e79;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
+    <p>Đang chuyển hướng đến <a href="dist/login.html" style="color:#f26f21;font-weight:bold;">Cổng Đào Tạo FAP</a>...</p>
+</body>
+</html>

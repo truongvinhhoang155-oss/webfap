@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Log In | Fap Fpt Education</title>
+    <meta name="description" content="Đăng nhập hệ thống quản lý đào tạo FAP - Trường Đại học FPT">
+    <link rel="icon" type="image/png" href="cb6d7f69-e144-4e48-897d-3c82d7a33def.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0c3e79;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #1a202c;
+            overflow-x: hidden;
+        }
+
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 6px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+            padding: 38px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Logo */
+        .login-logo {
+            margin-bottom: 20px;
+        }
+
+        .login-logo img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Title & Subtitle */
+        .login-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 4px;
+        }
+
+        .login-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        /* Session Alert Banner */
+        .session-banner {
+            display: none;
+            width: 100%;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-bottom: 16px;
+            text-align: left;
+            font-size: 12.5px;
+            color: #166534;
+        }
+
+        .session-banner strong {
+            color: #15803d;
+        }
+
+        .session-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .btn-session-enter {
+            flex: 1;
+            background: #16a34a;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-session-logout {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Tab Switcher */
+        .tab-switcher {
+            width: 100%;
+            background: #eef4fc;
+            padding: 4px;
+            border-radius: 8px;
+            display: flex;
+            gap: 4px;
+            margin-bottom: 18px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 9px 12px;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #64748b;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: #1e293b;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Description text */
+        .login-prompt {
+            font-size: 12.5px;
+            color: #64748b;
+            margin-bottom: 18px;
+        }
+
+        /* Button Group */
+        .button-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-login {
+            width: 100%;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        /* Google Button */
+        .btn-google {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            font-weight: 500;
+        }
+
+        .btn-google:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        /* FeID Button */
+        .btn-feid {
+            background: #4054b2;
+            border: 1px solid #4054b2;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .btn-feid:hover {
+            background: #34469a;
+            border-color: #34469a;
+        }
+
+        /* Parent Login Form */
+        .parent-form {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 40px;
+            padding: 0 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13.5px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .form-control:focus {
+            border-color: #4054b2;
+            box-shadow: 0 0 0 2px rgba(64, 84, 178, 0.15);
+        }
+
+        .btn-submit {
+            margin-top: 6px;
+            height: 42px;
+            background: #f26f21;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .btn-submit:hover {
+            background: #e05e12;
+        }
+
+        /* ==========================================================================
+           FEID MODAL POPUP STYLES
+           ========================================================================== */
+        .feid-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 25, 47, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .feid-modal-backdrop.active {
+            display: flex;
+        }
+
+        .feid-modal {
+            background-color: #ffffff !important;
+            width: 100%;
+            max-width: 530px;
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            overflow: hidden;
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .feid-modal-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b50b2 100%);
+            color: #ffffff;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .feid-modal-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .feid-modal-sub {
+            font-size: 12px;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+
+        .feid-close-btn {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            line-height: 1;
+            cursor: pointer;
+            opacity: 0.8;
+            padding: 4px;
+        }
+
+        .feid-close-btn:hover {
+            opacity: 1;
+        }
+
+        .feid-modal-body {
+            background-color: #ffffff !important;
+            padding: 20px 22px;
+            overflow-y: auto;
+            flex: 1;
+            text-align: left;
+        }
+
+
+
+        .feid-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 14px;
+        }
+
+        .feid-full-width {
+            grid-column: span 2;
+        }
+
+        .feid-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .feid-field-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .feid-field-group label .required {
+            color: #ef4444;
+        }
+
+        .feid-input {
+            width: 100%;
+            height: 38px;
+            padding: 0 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            color: #0f172a;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .feid-input:focus {
+            border-color: #3b50b2;
+            box-shadow: 0 0 0 3px rgba(59, 80, 178, 0.15);
+        }
+
+        .preset-pill {
+            background: #e2e8f0;
+            border: none;
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #334155;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .preset-pill:hover {
+            background: #cbd5e1;
+        }
+
+        .feid-modal-footer {
+            padding: 14px 22px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .btn-cancel {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-confirm-feid {
+            background: #f26f21;
+            border: none;
+            color: #ffffff;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .btn-confirm-feid:hover {
+            background: #e05e12;
+        }
+
+        .loading-toast {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translate(-50%, -20px);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- TOAST NOTIFICATION -->
+    <div id="loading-toast" class="loading-toast">Đang chuyển hướng đến Cổng đào tạo...</div>
+
+    <!-- MAIN LOGIN CARD -->
+    <div class="login-card">
+        <!-- FPT LOGO -->
+        <div class="login-logo">
+            <img src="cb6d7f69-e144-4e48-897d-3c82d7a33def.png" alt="FPT Education - TRƯỜNG ĐẠI HỌC FPT">
+        </div>
+
+        <!-- TITLE & SUBTITLE -->
+        <h1 class="login-title">Hệ thống quản lý đào tạo</h1>
+        <p class="login-subtitle">Đăng nhập</p>
+
+        <!-- SESSION BANNER (Visible if user already has an active session in browser) -->
+        <div class="session-banner" id="session-banner">
+            <div>Phiên đăng nhập hiện tại: <strong id="session-student-name">Sinh viên</strong> (<span id="session-student-code">MSSV</span>)</div>
+            <div class="session-actions">
+                <button type="button" class="btn-session-enter" id="btn-session-enter">👉 Tiếp tục vào FAP</button>
+                <button type="button" class="btn-session-logout" id="btn-session-logout">Đăng xuất</button>
+            </div>
+        </div>
+
+        <!-- TABS: Cán bộ & Sinh viên / Phụ huynh -->
+        <div class="tab-switcher">
+            <button class="tab-btn active" id="tab-student">Cán bộ & Sinh viên</button>
+            <button class="tab-btn" id="tab-parent">Phụ huynh</button>
+        </div>
+
+        <!-- STUDENT / STAFF LOGIN SECTION -->
+        <div id="student-section" style="width: 100%;">
+            <p class="login-prompt">Đăng nhập dành cho cán bộ và sinh viên</p>
+
+            <div class="button-group">
+                <!-- GOOGLE LOGIN BUTTON -->
+                <button class="btn-login btn-google" id="btn-login-google">
+                    <span style="font-weight: 700; color: #5f6368; font-size: 15px; font-family: Arial, sans-serif;">G</span>
+                    <span>Đăng nhập với Google</span>
+                </button>
+
+                <!-- FEID LOGIN BUTTON (OPENS INPUT MODAL) -->
+                <button class="btn-login btn-feid" id="btn-login-feid">
+                    <span>Đăng nhập với FeID</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PARENT LOGIN FORM (OPTIONAL TAB) -->
+        <div id="parent-section" class="parent-form">
+            <p class="login-prompt" style="text-align: center;">Đăng nhập tra cứu kết quả dành cho phụ huynh</p>
+            <div class="form-group">
+                <label for="student-roll">Mã số sinh viên (MSSV)</label>
+                <input type="text" id="student-roll" class="form-control" placeholder="Ví dụ: SE180123 / HE180123">
+            </div>
+            <div class="form-group">
+                <label for="parent-phone">Số điện thoại phụ huynh</label>
+                <input type="tel" id="parent-phone" class="form-control" placeholder="Số điện thoại đã đăng ký">
+            </div>
+            <button class="btn-submit" id="btn-login-parent">Tra cứu thông tin</button>
+        </div>
+    </div>
+
+    <!-- FEID INFORMATION INPUT MODAL -->
+    <div class="feid-modal-backdrop" id="feid-modal-backdrop">
+        <div class="feid-modal">
+            <div class="feid-modal-header">
+                <div>
+                    <div class="feid-modal-title" id="feid-modal-title">Xác thực tài khoản sinh viên FAP</div>
+                    <div class="feid-modal-sub" id="feid-modal-sub">Nhập thông tin sinh viên để khởi tạo phiên làm việc FAP</div>
+                </div>
+                <button class="feid-close-btn" id="btn-close-feid-modal" aria-label="Đóng">&times;</button>
+            </div>
+
+            <form id="feid-form" onsubmit="handleFeidSubmit(event)">
+                <div class="feid-modal-body">
+                    <div class="feid-form-grid">
+                        <!-- 1. Họ và tên -->
+                        <div class="feid-field-group feid-full-width">
+                            <label for="feid-fullname">Họ và tên sinh viên <span class="required">*</span></label>
+                            <input type="text" id="feid-fullname" class="feid-input" placeholder="Ví dụ: Nguyễn Văn An" required>
+                        </div>
+
+                        <!-- 2. Mã số sinh viên -->
+                        <div class="feid-field-group">
+                            <label for="feid-student-code">Mã sinh viên (MSSV) <span class="required">*</span></label>
+                            <input type="text" id="feid-student-code" class="feid-input" placeholder="Ví dụ: SE180123 / HE180123" required>
+                        </div>
+
+                        <!-- 3. Lớp sinh hoạt -->
+                        <div class="feid-field-group">
+                            <label for="feid-class-name">Lớp sinh hoạt <span class="required">*</span></label>
+                            <input type="text" id="feid-class-name" class="feid-input" placeholder="Ví dụ: SE1801 / IA21A01" required>
+                        </div>
+
+                        <!-- 4. Khóa -->
+                        <div class="feid-field-group">
+                            <label for="feid-batch">Khóa <span class="required">*</span></label>
+                            <input type="text" id="feid-batch" class="feid-input" placeholder="Ví dụ: 18 / 20 / 21" required>
+                        </div>
+
+                        <!-- 5. Mã chương trình -->
+                        <div class="feid-field-group">
+                            <label for="feid-program-code">Mã chương trình <span class="required">*</span></label>
+                            <input type="text" id="feid-program-code" class="feid-input" placeholder="Ví dụ: BIT_SE_18A / BIT_IA_21A" required>
+                        </div>
+
+                        <!-- 6. Email -->
+                        <div class="feid-field-group feid-full-width">
+                            <label for="feid-email">Email sinh viên <span class="required">*</span></label>
+                            <input type="email" id="feid-email" class="feid-input" placeholder="Ví dụ: annve180123@fpt.edu.vn" required>
+                        </div>
+
+                        <!-- 7. Số dư ví -->
+                        <div class="feid-field-group feid-full-width">
+                            <label for="feid-balance">Số dư tài khoản ví (VNĐ) <span class="required">*</span></label>
+                            <input type="text" id="feid-balance" class="feid-input" placeholder="0" value="0" required>
+                            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
+                                <button type="button" class="preset-pill" onclick="document.getElementById('feid-balance').value='0'">0đ</button>
+                                <button type="button" class="preset-pill" onclick="document.getElementById('feid-balance').value='5,000,000'">5 Triệu</button>
+                                <button type="button" class="preset-pill" onclick="document.getElementById('feid-balance').value='50,000,000'">50 Triệu</button>
+                                <button type="button" class="preset-pill" onclick="document.getElementById('feid-balance').value='99,999,999'">99.999.999đ</button>
+                                <button type="button" class="preset-pill" onclick="document.getElementById('feid-balance').value='-15,450,000'">-15.450.000đ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feid-modal-footer">
+                    <button type="button" class="btn-cancel" id="btn-cancel-feid">Hủy</button>
+                    <button type="submit" class="btn-confirm-feid">Đăng nhập vào FAP</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Check active session on load
+        function checkActiveSession() {
+            const isAuth = localStorage.getItem('fap_is_authenticated') === 'true';
+            const raw = localStorage.getItem('fap_student_data');
+            const banner = document.getElementById('session-banner');
+            if (isAuth && raw) {
+                try {
+                    const data = JSON.parse(raw);
+                    document.getElementById('session-student-name').textContent = data.fullname || 'Sinh viên';
+                    document.getElementById('session-student-code').textContent = data.studentCode || 'MSSV';
+                    banner.style.display = 'block';
+                } catch (e) {}
+            } else {
+                banner.style.display = 'none';
+            }
+        }
+        checkActiveSession();
+
+        document.getElementById('btn-session-enter').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        document.getElementById('btn-session-logout').addEventListener('click', () => {
+            localStorage.removeItem('fap_is_authenticated');
+            localStorage.removeItem('fap_student_data');
+            checkActiveSession();
+            document.getElementById('feid-fullname').value = '';
+            document.getElementById('feid-student-code').value = '';
+            document.getElementById('feid-class-name').value = '';
+            document.getElementById('feid-batch').value = '';
+            document.getElementById('feid-program-code').value = '';
+            document.getElementById('feid-email').value = '';
+            document.getElementById('feid-balance').value = '0';
+        });
+
+        // Tab switching
+        const tabStudent = document.getElementById('tab-student');
+        const tabParent = document.getElementById('tab-parent');
+        const studentSection = document.getElementById('student-section');
+        const parentSection = document.getElementById('parent-section');
+        const toast = document.getElementById('loading-toast');
+
+        tabStudent.addEventListener('click', () => {
+            tabStudent.classList.add('active');
+            tabParent.classList.remove('active');
+            studentSection.style.display = 'block';
+            parentSection.style.display = 'none';
+        });
+
+        tabParent.addEventListener('click', () => {
+            tabParent.classList.add('active');
+            tabStudent.classList.remove('active');
+            studentSection.style.display = 'none';
+            parentSection.style.display = 'flex';
+        });
+
+        // FeID Modal logic
+        const feidModal = document.getElementById('feid-modal-backdrop');
+        const btnLoginFeid = document.getElementById('btn-login-feid');
+        const btnLoginGoogle = document.getElementById('btn-login-google');
+        const btnCloseFeidModal = document.getElementById('btn-close-feid-modal');
+        const btnCancelFeid = document.getElementById('btn-cancel-feid');
+
+
+
+        function openModalWithTitle(title, sub) {
+            document.getElementById('feid-modal-title').textContent = title;
+            document.getElementById('feid-modal-sub').textContent = sub;
+            const saved = localStorage.getItem('fap_student_data');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    document.getElementById('feid-fullname').value = data.fullname || '';
+                    document.getElementById('feid-student-code').value = data.studentCode || '';
+                    document.getElementById('feid-class-name').value = data.className || '';
+                    document.getElementById('feid-batch').value = data.batch || '';
+                    document.getElementById('feid-program-code').value = data.programCode || '';
+                    document.getElementById('feid-email').value = data.email || '';
+                    document.getElementById('feid-balance').value = data.balance !== undefined ? data.balance : '0';
+                } catch (e) {}
+            }
+            feidModal.classList.add('active');
+        }
+
+        btnLoginFeid.addEventListener('click', () => {
+            openModalWithTitle('Xác thực tài khoản FeID', 'Nhập thông tin tài khoản sinh viên FPT Education:');
+        });
+
+        btnLoginGoogle.addEventListener('click', () => {
+            openModalWithTitle('Đăng nhập Google Workspace FPT Education', 'Nhập thông tin sinh viên liên kết với tài khoản Google:');
+        });
+
+        function closeFeidModal() {
+            feidModal.classList.remove('active');
+        }
+
+        btnCloseFeidModal.addEventListener('click', closeFeidModal);
+        btnCancelFeid.addEventListener('click', closeFeidModal);
+
+        feidModal.addEventListener('click', (e) => {
+            if (e.target === feidModal) closeFeidModal();
+        });
+
+        // Submit form
+        async function handleFeidSubmit(e) {
+            e.preventDefault();
+
+            const fullname = document.getElementById('feid-fullname').value.trim() || 'Sinh viên FPT';
+            const studentCode = document.getElementById('feid-student-code').value.trim().toUpperCase() || 'MSSV';
+            const className = document.getElementById('feid-class-name').value.trim().toUpperCase() || 'SE1801';
+            const batch = document.getElementById('feid-batch').value.trim() || '18';
+            const programCode = document.getElementById('feid-program-code').value.trim().toUpperCase() || 'BIT_SE_18A';
+            let email = document.getElementById('feid-email').value.trim();
+            const balance = document.getElementById('feid-balance').value.trim() || '0';
+
+            if (!email) {
+                email = `${studentCode.toLowerCase()}@fpt.edu.vn`;
+            }
+
+            const studentPayload = {
+                fullname: fullname,
+                studentCode: studentCode,
+                className: className,
+                batch: batch,
+                programCode: programCode,
+                email: email,
+                balance: balance,
+                timestamp: new Date().toISOString()
+            };
+
+            // Save to localStorage & authenticate
+            localStorage.setItem('fap_is_authenticated', 'true');
+            localStorage.setItem('fap_student_data', JSON.stringify(studentPayload));
+
+            closeFeidModal();
+            toast.textContent = `Đăng nhập thành công! Xin chào ${fullname} (${studentCode})`;
+            toast.style.display = 'block';
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 600);
+        }
+
+        // Parent login submit
+        document.getElementById('btn-login-parent').addEventListener('click', () => {
+            const roll = document.getElementById('student-roll').value.trim();
+            if (!roll) {
+                alert('Vui lòng nhập Mã số sinh viên (MSSV) để tra cứu!');
+                document.getElementById('student-roll').focus();
+                return;
+            }
+
+            const studentPayload = {
+                fullname: 'Sinh viên FPT (' + roll.toUpperCase() + ')',
+                studentCode: roll.toUpperCase(),
+                className: 'SE1801',
+                batch: '18',
+                programCode: 'BIT_SE_18A',
+                email: `${roll.toLowerCase()}@fpt.edu.vn`,
+                balance: '0',
+                isParentView: true,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('fap_is_authenticated', 'true');
+            localStorage.setItem('fap_student_data', JSON.stringify(studentPayload));
+
+            toast.textContent = `Đang tra cứu hồ sơ sinh viên ${roll.toUpperCase()}...`;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 600);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+# Private browser profiles & sessions
+.fap_chrome_profile/
+fap_cookies.json
+fap_live_dom.html
+scraped_fap/
+
+# Development & Scraping scratch scripts
+scratch_*.py
+generate_*.py
+update_*.py
+list_*.py
+playwright_*.py
+verify_*.py
+setup_*.py
+clean_*.py
+run_*.py
+inspect_*.py
+debug_*.py
+test_*.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# OS and Editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs & temp files
+*.log
+*.zip

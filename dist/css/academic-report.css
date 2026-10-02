@@ -1,0 +1,276 @@
+/* Academic reports — Grade / Attendance domain styles only.
+   Shared filter/result/empty/sheet live in style.css (.fap-* + academic-report-* aliases). */
+
+.academic-report {
+    position: relative;
+}
+
+.academic-report-loading .academic-report-content {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.academic-report-loading::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: rgba(var(--ct-secondary-bg-rgb, 255, 255, 255), 0.35);
+    pointer-events: none;
+    border-radius: 1rem;
+}
+
+.academic-report-select-hint {
+    padding: 1.5rem 1.15rem;
+    text-align: center;
+    color: var(--ct-secondary-color, #6c757d);
+}
+
+/* Mark sheet */
+.student-mark-sheet {
+    --sheet-border: rgba(var(--ct-primary-rgb), 0.12);
+    margin: 0;
+}
+
+.student-mark-sheet th,
+.student-mark-sheet td {
+    border: 1px solid var(--sheet-border);
+    vertical-align: middle;
+    padding: 0.7rem 0.85rem;
+}
+
+.student-mark-sheet thead th {
+    background: linear-gradient(180deg, rgba(var(--ct-primary-rgb), 0.14) 0%, rgba(var(--ct-primary-rgb), 0.08) 100%);
+    color: var(--ct-body-color, #313a46);
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.student-mark-sheet .sheet-group-cell {
+    background: rgba(var(--ct-primary-rgb), 0.05);
+    text-align: center;
+    font-weight: 700;
+    color: var(--ct-primary-text-emphasis, var(--ct-primary));
+    min-width: 7.5rem;
+}
+
+.student-mark-sheet .sheet-row-total td {
+    background: rgba(108, 117, 125, 0.08) !important;
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.student-mark-sheet .sheet-grand-total td {
+    background: linear-gradient(180deg, rgba(var(--ct-primary-rgb), 0.14) 0%, rgba(var(--ct-primary-rgb), 0.08) 100%) !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.student-mark-col-score {
+    width: 7.5rem;
+    text-align: center;
+}
+
+.student-mark-sheet .mark-score {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+}
+
+.student-mark-sheet .grade-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.student-mark-sheet .grade-status--passed {
+    color: #0f7a4c;
+    background: rgba(25, 135, 84, 0.12);
+}
+
+.student-mark-sheet .grade-status--failed {
+    color: #b42318;
+    background: rgba(220, 53, 69, 0.12);
+}
+
+.student-mark-sheet .grade-average {
+    font-size: 1.05rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.student-mark-sheet .grade-average.is-passed { color: #0f7a4c; }
+.student-mark-sheet .grade-average.is-failed { color: #b42318; }
+
+/* Attendance summary */
+.attendance-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem 1rem;
+    padding: 0.85rem 1.15rem;
+    border-bottom: 1px solid rgba(var(--ct-primary-rgb), 0.08);
+}
+
+.attendance-summary--ok {
+    background: rgba(var(--ct-info-rgb, 41, 155, 246), 0.08);
+    color: var(--ct-body-color, #313a46);
+}
+
+.attendance-summary--danger {
+    background: rgba(220, 53, 69, 0.08);
+    color: #842029;
+}
+
+.attendance-summary__main {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.attendance-summary__main i {
+    margin-top: 0.1rem;
+    font-size: 1.05rem;
+}
+
+.attendance-summary__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.28rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);
+}
+
+.attendance-col-index {
+    width: 3rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.attendance-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.28rem 0.6rem;
+    border-radius: 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+
+.attendance-chip--date {
+    color: var(--ct-primary);
+    background: rgba(var(--ct-primary-rgb), 0.1);
+}
+
+.attendance-chip--slot {
+    color: #9a3412;
+    background: rgba(253, 126, 20, 0.12);
+}
+
+.attendance-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.attendance-status--present { color: #0f7a4c; background: rgba(25, 135, 84, 0.12); }
+.attendance-status--absent { color: #b42318; background: rgba(220, 53, 69, 0.12); }
+.attendance-status--pending { color: #9a6700; background: rgba(255, 193, 7, 0.18); }
+.attendance-status--exempt { color: #495057; background: rgba(108, 117, 125, 0.14); }
+
+.student-thesis-condition-sheet th,
+.student-thesis-condition-sheet td {
+    vertical-align: middle;
+}
+
+.student-thesis-condition-sheet thead th {
+    text-align: center;
+}
+
+.graduate-condition-table-scroll {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.student-thesis-condition-sheet {
+    width: 100%;
+    max-width: 100%;
+}
+
+.student-thesis-condition-sheet .graduate-condition-column {
+    min-width: 14rem;
+}
+
+.student-thesis-condition-sheet .graduate-condition-value {
+    min-width: 14rem;
+    text-align: center;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.student-thesis-condition-sheet tbody td {
+    text-align: center;
+}
+
+.student-thesis-condition-sheet .graduate-condition-conclusion {
+    font-weight: 700;
+}
+
+.student-thesis-condition-sheet td {
+    min-width: 9rem;
+    white-space: normal;
+}
+
+.student-thesis-condition-sheet th:first-child,
+.student-thesis-condition-sheet td:first-child {
+    min-width: 8rem;
+}
+
+@media (max-width: 767.98px) {
+    .student-thesis-condition-sheet {
+        min-width: 50rem;
+    }
+
+    .student-thesis-condition-sheet th,
+    .student-thesis-condition-sheet td {
+        padding: 0.65rem 0.75rem;
+        font-size: 0.8125rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .student-mark-sheet th,
+    .student-mark-sheet td {
+        padding: 0.55rem 0.6rem;
+        font-size: 0.8125rem;
+    }
+
+    .student-mark-col-score { width: 5.5rem; }
+
+    .attendance-summary { padding: 0.75rem 0.9rem; }
+
+    .attendance-chip { white-space: normal; }
+}
